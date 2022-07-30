@@ -28,8 +28,9 @@ screen.onkey(l_paddle.go_up, 'w')
 screen.onkey(l_paddle.go_down, 's')
 
 game_on = True
+sleep_time = 0.1
 while game_on:
-    time.sleep(0.1)  # To slow down the ball.
+    time.sleep(sleep_time)  # To slow down the ball.
     screen.update()  # To make paddle visible, since tracer(0) (animations are off).
     # Move the ball.
     ball.move()
@@ -44,17 +45,24 @@ while game_on:
     if((ball.distance(r_paddle) < 50 and ball.xcor() > 320) or (ball.distance(l_paddle) < 50 and ball.xcor() < -320)):
         ball.hit()
 
-        # FIX: ball.hit() is called multiple times when dist remains
-        #      within the constraints after collision.
+        # Increase ball speed on each successful hit.
+        sleep_time = sleep_time*(0.95)
+
+        ##############################################################
+        # FIX: ball.hit() is called multiple times when dist remains #
+        #      within the constraints after collision.               #
+        ##############################################################
     
     # Detect miss at paddle and reset ball to center.
     if(ball.xcor() > 380):  # right miss.
         ball.reset_pos()
+        sleep_time = 0.1  # reset ball speed on miss.
         scoreboard.l_score += 1
         scoreboard.update()
     
     if(ball.xcor() < -380):  # left miss.
         ball.reset_pos()
+        sleep_time = 0.1  # reset ball speed on miss.
         scoreboard.r_score += 1
         scoreboard.update()
 
