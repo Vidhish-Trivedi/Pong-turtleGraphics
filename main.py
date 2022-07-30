@@ -31,5 +31,25 @@ while game_on:
     # Move the ball.
     ball.move()
 
+    # Detect collisions with walls (top and bottom).
+    if(ball.ycor() > 280 or ball.ycor() < -280):
+        # Bounce the ball (change the direction along y-axis only).
+        ball.bounce()
+    
+    # Detect collisions with paddle(s).
+    # r_paddle or l_paddle.
+    if((ball.distance(r_paddle) < 50 and ball.xcor() > 320) or (ball.distance(l_paddle) < 50 and ball.xcor() < -320)):
+        ball.hit()
+
+        # FIX: ball.hit() is called multiple times when dist remains
+        #      within the constraints after collision.
+    
+    # Detect miss at paddle and reset ball to center.
+    if(ball.xcor() > 380):
+        ball.reset_pos()
+    
+    if(ball.xcor() < -380):
+        ball.reset_pos()
+
 
 screen.exitonclick()
