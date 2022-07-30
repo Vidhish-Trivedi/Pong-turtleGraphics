@@ -10,6 +10,7 @@ class Ball(t.Turtle):
         # Attributes to help with collisions and direction of motion.
         self.x_move = 10
         self.y_move = 10
+        self.sleep_time = 0.1
 
     # Method to move the ball.
     def move(self):
@@ -23,8 +24,11 @@ class Ball(t.Turtle):
 
     def hit(self):
         self.x_move *= (-1)  # reverse direction of motion along y-axis.
+        # Increase ball speed on each successful hit ==> decrease sleep_time.
+        self.sleep_time *= (0.9)
     
     def reset_pos(self):
+        self.sleep_time = 0.1  # reset ball speed on miss.
         self.goto(0, 0)
         self.x_move *= (-1)  # so that the player who scored has the turn to hit next.
 

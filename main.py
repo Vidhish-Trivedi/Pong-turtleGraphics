@@ -19,7 +19,6 @@ ball = bC.Ball()
 # Creating the scoreBoard using the Score class.
 scoreboard = sB.Score()
 
-
 # Moving the paddles.
 screen.listen()
 screen.onkey(r_paddle.go_up, 'Up')
@@ -28,9 +27,8 @@ screen.onkey(l_paddle.go_up, 'w')
 screen.onkey(l_paddle.go_down, 's')
 
 game_on = True
-sleep_time = 0.1
 while game_on:
-    time.sleep(sleep_time)  # To slow down the ball.
+    time.sleep(ball.sleep_time)  # To slow down the ball.
     screen.update()  # To make paddle visible, since tracer(0) (animations are off).
     # Move the ball.
     ball.move()
@@ -40,29 +38,22 @@ while game_on:
         # Bounce the ball (change the direction along y-axis only).
         ball.bounce()
     
-    # Detect collisions with paddle(s).
-    # r_paddle or l_paddle.
-    if((ball.distance(r_paddle) < 50 and ball.xcor() > 320) or (ball.distance(l_paddle) < 50 and ball.xcor() < -320)):
+    # Detect collisions with paddle(s), IMPROVED CONSTRAINTS.
+    # r_paddle
+    if(ball.xcor() == 330 and ((ball.ycor() > r_paddle.ycor() - 57) and (ball.ycor() < r_paddle.ycor() + 57))):
         ball.hit()
-
-        # Increase ball speed on each successful hit.
-        sleep_time = sleep_time*(0.95)
-
-        ##############################################################
-        # FIX: ball.hit() is called multiple times when dist remains #
-        #      within the constraints after collision.               #
-        ##############################################################
+    # l_paddle
+    if(ball.xcor() == -330 and ((ball.ycor() > l_paddle.ycor() - 57) and (ball.ycor() < l_paddle.ycor() + 57))):
+        ball.hit()
     
     # Detect miss at paddle and reset ball to center.
     if(ball.xcor() > 380):  # right miss.
         ball.reset_pos()
-        sleep_time = 0.1  # reset ball speed on miss.
         scoreboard.l_score += 1
         scoreboard.update()
     
     if(ball.xcor() < -380):  # left miss.
         ball.reset_pos()
-        sleep_time = 0.1  # reset ball speed on miss.
         scoreboard.r_score += 1
         scoreboard.update()
 
