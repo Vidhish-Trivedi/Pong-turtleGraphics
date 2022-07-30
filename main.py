@@ -2,6 +2,7 @@ import turtle as t
 import time
 import paddleClass as pC
 import ballClass as bC
+import scoreBoard as sB
 
 # Setting up the screen.
 screen = t.Screen()
@@ -13,6 +14,11 @@ screen.tracer(0)  # Turn off animations.
 # Creating Paddle objects using Paddle class.
 r_paddle = pC.Paddle(350, 0)
 l_paddle = pC.Paddle(-350, 0)
+# Creating a Ball object using Ball class.
+ball = bC.Ball()
+# Creating the scoreBoard using the Score class.
+scoreboard = sB.Score()
+
 
 # Moving the paddles.
 screen.listen()
@@ -20,9 +26,6 @@ screen.onkey(r_paddle.go_up, 'Up')
 screen.onkey(r_paddle.go_down, 'Down')
 screen.onkey(l_paddle.go_up, 'w')
 screen.onkey(l_paddle.go_down, 's')
-
-# Creating a Ball object using Ball class.
-ball = bC.Ball()
 
 game_on = True
 while game_on:
@@ -45,11 +48,14 @@ while game_on:
         #      within the constraints after collision.
     
     # Detect miss at paddle and reset ball to center.
-    if(ball.xcor() > 380):
+    if(ball.xcor() > 380):  # right miss.
         ball.reset_pos()
+        scoreboard.l_score += 1
+        scoreboard.update()
     
-    if(ball.xcor() < -380):
+    if(ball.xcor() < -380):  # left miss.
         ball.reset_pos()
-
+        scoreboard.r_score += 1
+        scoreboard.update()
 
 screen.exitonclick()
