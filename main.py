@@ -12,8 +12,8 @@ screen.title('Pong')
 screen.tracer(0)  # Turn off animations.
 
 # Creating Paddle objects using Paddle class.
-r_paddle = pC.Paddle(350, 0)
-l_paddle = pC.Paddle(-350, 0)
+r_paddle = pC.Paddle(350, 0, 'cyan')
+l_paddle = pC.Paddle(-350, 0, 'red')
 # Creating a Ball object using Ball class.
 ball = bC.Ball()
 # Creating the scoreBoard using the Score class.
