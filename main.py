@@ -21,10 +21,10 @@ scoreboard = sB.Score()
 
 # Moving the paddles.
 screen.listen()
-screen.onkey(r_paddle.go_up, 'Up')
-screen.onkey(r_paddle.go_down, 'Down')
-screen.onkey(l_paddle.go_up, 'w')
-screen.onkey(l_paddle.go_down, 's')
+screen.onkeypress(r_paddle.go_up, 'Up')
+screen.onkeypress(r_paddle.go_down, 'Down')
+screen.onkeypress(l_paddle.go_up, 'w')
+screen.onkeypress(l_paddle.go_down, 's')
 
 game_on = True
 while game_on:
@@ -57,4 +57,4 @@ while game_on:
         scoreboard.r_score += 1
         scoreboard.update()
 
-screen.exitonclick()
+screen.mainloop()
